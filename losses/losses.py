@@ -47,6 +47,15 @@ def ce_loss(true, logits, weights, ignore=255):
     return ce_loss
 
 
+class CrossEntropyLoss2d(nn.Module):
+    def __init__(self):
+        super(CrossEntropyLoss2d, self).__init__()
+        self.nll_loss = nn.BCEWithLogitsLoss(reduction='mean')
+
+    def forward(self, inputs, targets):
+        return self.nll_loss(inputs, targets)
+
+
 def dice_loss(true, logits, eps=1e-7):
     """Computes the Sørensen–Dice loss.
     Note that PyTorch optimizers minimize a loss. In this
