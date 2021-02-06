@@ -17,3 +17,13 @@
  2. *losses* - contains all the loss function definitons
  3. *data* - contains the python script for processing human kidney tissue images from [HuBMAP - Hacking the Kidney](https://www.kaggle.com/c/hubmap-kidney-segmentation/data)
  4. *training* - contains the python code for neural network training
+
+## Comparison between models
+Using semantic segmentation of human kidney tissue images as a benchmark test, PSPNet shows the best performance:
+
+| Model     | Dice coefficient  |
+| --------- | ----------------- |
+| ResNet    | Content Cell      |
+| SE-ResNet | Content Cell      |
+| PSPNet    | Content Cell      |
+| U-Net     | Content Cell      |

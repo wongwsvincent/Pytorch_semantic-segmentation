@@ -1,5 +1,5 @@
-import time
 import os
+import gc
 from random import randrange
 import numpy as np
 import pandas as pd
@@ -193,8 +193,6 @@ if(loss_choice=='CrossEntropy'):
 optimizer = torch.optim.Adam(model.parameters(),lr=args.learning_rate)
 
 
-start_time = time.time()
-
 torch.cuda.empty_cache()
 list_trainloss=[]
 list_testloss=[]
@@ -249,7 +247,7 @@ for i, (train_batch_loader, valid_batch_loader) in enumerate(dataloaders, 0):
         print("Finished epoch {}...".format(epoch+1))
         print()
         
-    torch.save(model.state_dict(), 'myWeight_{}_cv{}.pt'.format(model_choice,i))
+    torch.save(model.state_dict(), 'myWeight_{}_cv{}.pt'.format(args.model_type,i))
     list_trainloss.append(tmp_list_trainloss_perEpoch)
     list_testloss.append(tmp_list_testloss_perEpoch)
     del tmp_list_trainloss_perEpoch
@@ -274,4 +272,19 @@ for i, (train_batch_loader, valid_batch_loader) in enumerate(dataloaders, 0):
 #         ax[1,i].imshow(tmp_mask)
 # plt.show()
 
-print("--- %s minutes ---" % ((time.time() - start_time)/60))
+gc.collect()
+torch.cuda.empty_cache()
+
+data = np.array(list_trainloss)
+np.savez("Mytrainloss_{}".format(args.model_type), data)
+data = np.array(list_testloss)
+np.savez("Mytestloss_{}".format(args.model_type), data)
+
+os.system("mkdir -p results")
+
+if(args.cv_flg==True):
+    os.system("mv My*loss_{}.npz results/".format(args.model_type))
+    os.system("mv myWeight_{}_*.pt results/".format(args.model_type))
+else:
+    os.system("mv My*loss_{}.npz final_results/".format(args.model_type))
+    os.system("mv myWeight_{}_*.pt final_results/".format(args.model_type))
