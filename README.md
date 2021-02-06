@@ -11,3 +11,9 @@
  1. binary cross-entropy loss
  2. Sørensen–Dice loss
  3. Jaccard loss
+
+## Directories
+ 1. *models* - contains all the neural network definitons
+ 2. *losses* - contains all the loss function definitons
+ 3. *data* - contains the processed human kidney tissue images from [HuBMAP - Hacking the Kidney](https://www.kaggle.com/c/hubmap-kidney-segmentation/data)
+ 4. *training* - contains the python code for neural network training
