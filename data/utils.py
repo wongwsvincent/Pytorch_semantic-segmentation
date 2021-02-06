@@ -1,3 +1,5 @@
+import numpy as np
+
 def enc2mask(enc, shape):
     img = np.zeros(shape[0]*shape[1], dtype=np.uint8)
     s = enc.split()
