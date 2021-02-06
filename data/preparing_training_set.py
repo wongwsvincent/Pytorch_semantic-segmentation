@@ -41,6 +41,10 @@ if( not os.path.isdir(args.root_dir) ):
 elif( not os.path.isfile(os.path.join(args.root_dir,"HuBMAP-20-dataset_information.csv")) ):
     sys.exit("Error: Check your path!")
 
+if(args.saveImage):
+    os.system("rm -rf {}; mkdir -p {}".format(os.path.join(args.root_dir,"processed/train"),os.path.join(args.root_dir,"processed/train")))
+    os.system("rm -rf {}; mkdir -p {}".format(os.path.join(args.root_dir,"processed/mask"),os.path.join(args.root_dir,"processed/mask")))
+
 ### read the metadata file and check which images are for training
 df_global_metadata_reader=pd.read_csv(os.path.join(args.root_dir,"HuBMAP-20-dataset_information.csv"), header=0)
 df_global_metadata_reader["for_training"]=[ os.path.isfile( os.path.join(args.root_dir,"train",local_metadatafile) ) for local_metadatafile in df_global_metadata_reader['glomerulus_segmentation_file'] ]
@@ -105,9 +109,6 @@ for idx in range(len(df_global_metadata_reader['glomerulus_segmentation_file']))
             gmax_height=height
 
         if(args.saveImage):
-            os.system("rm -rf {}; mkdir -p {}".format(os.path.join(args.root_dir,"processed/train"),os.path.join(args.root_dir,"processed/train")))
-            os.system("rm -rf {}; mkdir -p {}".format(os.path.join(args.root_dir,"processed/mask"),os.path.join(args.root_dir,"processed/mask")))
-
             lower_h=max(0,min_y-((args.imgSize-height)//2-1))
             upper_h=min(global_num_hpixel,max_y+(args.imgSize-(height))//2)
             lower_w=max(0,min_x-((args.imgSize-width)//2-1))
