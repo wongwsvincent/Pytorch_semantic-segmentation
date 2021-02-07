@@ -1,4 +1,4 @@
-# PyTorch for Image segmentation
+# PyTorch for Image Segmentation
  This project implements several convolutional neural network models for semantic segmentation in PyTorch. It uses glomerulus identification as test subject to compare the performance of different neural networks, as well as loss functions.
 
 ## Models
